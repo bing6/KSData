@@ -1,0 +1,62 @@
+//
+//  KSConfig.h
+//  KSData
+//
+//  Created by bing.hao on 15/3/16.
+//
+//
+
+#import <Foundation/Foundation.h>
+#import "KSDataAccess.h"
+#import "KSMacros.h"
+
+//#define KS_ABC_KEY  @"qdsj9981!@#$%^&*()12345678ABCDad"
+#define KS_ABC_KEY  @""
+#define KS_ABC_PATH KS_RESOURCE_PATH(@"datasource", @"xml")
+
+CG_INLINE KSDataConfiguration * KS_GET_DEF_CONFIG_SHARED(){
+    static id __staticObject = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        __staticObject = [KSDataConfiguration newInstance:KS_ABC_PATH dec:KS_ABC_KEY];
+    });
+    return __staticObject;
+}
+
+CG_INLINE KSDataAccess * KS_GET_DEF_DAO_INSTANCE(){
+    return [[KSDataAccess alloc] initWithDataConfig:KS_GET_DEF_CONFIG_SHARED()];
+}
+
+
+/**
+ * @biref Table schema by KSUser
+ */
+#define KS_T_KSUSER @"KSUser"
+#define KS_F_KSUSER_USER_ID @"User_ID"
+#define KS_F_KSUSER_USER_NAME @"User_Name"
+#define KS_F_KSUSER_USER_AVATAR @"User_Avatar"
+
+
+/**
+ * @biref Table schema by KSUserDetial
+ */
+#define KS_T_KSUSERDETIAL @"KSUserDetial"
+#define KS_F_KSUSERDETIAL_USER_ID @"User_ID"
+#define KS_F_KSUSERDETIAL_USER_ADDRESS @"User_Address"
+#define KS_F_KSUSERDETIAL_USER_UNREAD @"User_Unread"
+
+
+#define KS_S_KSUSER_SELECT_ALL @"AUTO_SELECT_KSUSERENTITY_ALL"
+#define KS_S_KSUSER_SELECT_SINGLE @"AUTO_SELECT_KSUSERENTITY_SINGLE"
+#define KS_S_KSUSER_SELECT_PAGE @"AUTO_SELECT_KSUSERENTITY_PAGE"
+#define KS_S_KSUSER_DELETE_SINGLE @"AUTO_DELETE_KSUSERENTITY_SINGLE"
+#define KS_S_KSUSER_DELETE_ALL @"AUTO_DELETE_KSUSERENTITY_ALL"
+#define KS_S_KSUSER_UPDATE_SINGLE @"AUTO_UPDATE_KSUSERENTITY_SINGLE"
+#define KS_S_KSUSER_INSERT_SINGLE @"AUTO_INSERT_KSUSERENTITY_SINGLE"
+#define KS_S_KSUSERDETIAL_SELECT_ALL @"AUTO_SELECT_KSUSERDETIALENTITY_ALL"
+#define KS_S_KSUSERDETIAL_SELECT_SINGLE @"AUTO_SELECT_KSUSERDETIALENTITY_SINGLE"
+#define KS_S_KSUSERDETIAL_SELECT_PAGE @"AUTO_SELECT_KSUSERDETIALENTITY_PAGE"
+#define KS_S_KSUSERDETIAL_DELETE_SINGLE @"AUTO_DELETE_KSUSERDETIALENTITY_SINGLE"
+#define KS_S_KSUSERDETIAL_DELETE_ALL @"AUTO_DELETE_KSUSERDETIALENTITY_ALL"
+#define KS_S_KSUSERDETIAL_UPDATE_SINGLE @"AUTO_UPDATE_KSUSERDETIALENTITY_SINGLE"
+#define KS_S_KSUSERDETIAL_INSERT_SINGLE @"AUTO_INSERT_KSUSERDETIALENTITY_SINGLE"

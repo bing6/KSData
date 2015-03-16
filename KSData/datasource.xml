@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<datasource  connection="${APP_CACHE}/db/aa/abc.db" version="9982">
+    <database_schema>
+        <table  name="KSUser">
+            <column  name="User_ID" type="integer" unique="1"/>
+            <column  name="User_Name" type="text"/>
+            <column  name="User_Avatar" type="text"/>
+        </table>
+        <table  name="KSUserDetial">
+            <column  name="User_ID" type="text" unique="1"/>
+            <column  name="User_Address" type="text"/>
+            <column  name="User_Unread" type="integer"/>
+        </table>
+    </database_schema>
+    <data_mapper>
+        <result_map>
+            <item  id="AUTO_KSUSERENTITY" class="KSUserEntity">
+                <result  property="userID" column="User_ID"></result>
+                <result  property="userName" column="User_Name"></result>
+                <result  property="userAvatar" column="User_Avatar"></result>
+            </item>
+            <item  id="AUTO_KSUSERDETIALENTITY" class="KSUserDetialEntity">
+                <result  property="userID" column="User_ID"></result>
+                <result  property="userAddress" column="User_Address"></result>
+                <result  property="userUnread" column="User_Unread"></result>
+            </item>
+        </result_map>
+        <statement>
+            <select  id="AUTO_SELECT_KSUSERENTITY_ALL" result_map="AUTO_KSUSERENTITY">SELECT * FROM KSUser</select>
+            <select  id="AUTO_SELECT_KSUSERENTITY_SINGLE" result_map="AUTO_KSUSERENTITY">SELECT * FROM KSUser WHERE User_ID = ?</select>
+            <select  id="AUTO_SELECT_KSUSERENTITY_PAGE" result_map="AUTO_KSUSERENTITY">SELECT * FROM KSUser LIMIT ?,?</select>
+            <delete  id="AUTO_DELETE_KSUSERENTITY_SINGLE">DELETE FROM KSUser WHERE User_ID = ? </delete>
+            <delete  id="AUTO_DELETE_KSUSERENTITY_ALL">DELETE FROM KSUser</delete>
+            <update  id="AUTO_UPDATE_KSUSERENTITY_SINGLE">UPDATE KSUser SET User_Name= :userName,User_Avatar= :userAvatar where User_ID= :userID</update>
+            <insert  id="AUTO_INSERT_KSUSERENTITY_SINGLE">INSERT INTO KSUser (User_ID,User_Name,User_Avatar) VALUES (:userID,:userName,:userAvatar)</insert>
+            <select  id="AUTO_SELECT_KSUSERDETIALENTITY_ALL" result_map="AUTO_KSUSERDETIALENTITY">SELECT * FROM KSUserDetial</select>
+            <select  id="AUTO_SELECT_KSUSERDETIALENTITY_SINGLE" result_map="AUTO_KSUSERDETIALENTITY">SELECT * FROM KSUserDetial WHERE User_ID = ?</select>
+            <select  id="AUTO_SELECT_KSUSERDETIALENTITY_PAGE" result_map="AUTO_KSUSERDETIALENTITY">SELECT * FROM KSUserDetial LIMIT ?,?</select>
+            <delete  id="AUTO_DELETE_KSUSERDETIALENTITY_SINGLE">DELETE FROM KSUserDetial WHERE User_ID = ? </delete>
+            <delete  id="AUTO_DELETE_KSUSERDETIALENTITY_ALL">DELETE FROM KSUserDetial</delete>
+            <update  id="AUTO_UPDATE_KSUSERDETIALENTITY_SINGLE">UPDATE KSUserDetial SET User_Address= :userAddress,User_Unread= :userUnread where User_ID= :userID</update>
+            <insert  id="AUTO_INSERT_KSUSERDETIALENTITY_SINGLE">INSERT INTO KSUserDetial (User_ID,User_Address,User_Unread) VALUES (:userID,:userAddress,:userUnread)</insert>
+        </statement>
+    </data_mapper>
+</datasource>

@@ -1,0 +1,17 @@
+PODS:
+  - FMDB (2.5):
+    - FMDB/standard (= 2.5)
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
+    - FMDB/common
+  - GDataXML-HTML (1.2.0)
+
+DEPENDENCIES:
+  - FMDB (~> 2.4)
+  - GDataXML-HTML (~> 1.2.0)
+
+SPEC CHECKSUMS:
+  FMDB: 0efa188cf0dd1ce82c27a478cd5f5fa245308677
+  GDataXML-HTML: 3aa8f4200dd461d0a95d812397cebd6a2c98953f
+
+COCOAPODS: 0.36.0

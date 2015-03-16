@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 数据源配置
+	 datasource.@connection 数据库连接字符串(必填)
+	 datasource.@version    数据库版本号(必填)
+ ${APP_CACHE}    cache
+ ${APP_TEMP}     temp
+ ${APP_DOCUMENT} document
+ ${APP_CUSTOM}   自定义
+-->
+<datasource connection="${APP_CACHE}/db/aa/abc.db" version="9982">
+	<database_schema>
+		<!-- 数据库表结构
+			 table.@name 数据表名称(必填)
+			 table.column.@name 字段名称(必填)
+			 table.column.@type 字段类型(必填)
+			 table.column.@unique 是否唯一(1与0来表示,可以不填，默认为不唯一)
+		-->
+		<table name="Tb_User">
+			<column name="User_ID" type="integer" unique="1" />
+			<column name="User_Name" type="text" />
+			<column name="User_Avatar" type="text" />
+		</table>
+		<table name="Tb_Test">
+			<column name="Test_ID" type="text" unique="1" />
+			<column name="Test_Name" type="text" />
+            <column name="Test_B" type="integer" />
+		</table>
+	</database_schema>
+	<data_mapper>
+		<result_map>
+			<!-- 查询结果返回值的映射关系
+				 item.@id 自定义唯一ID(必填)
+				 item.@class 返回值类型,可以是NSNumber,NSString,NSDate,NSDictionary,KSDataObject(必填)
+				 item.result 当class类型为KSDataObject时才可以配置,这里是把KSDataObject中的属性字段与查询结果做匹配关系(可不填)
+				 item.result.@property 对象属性名(必填)
+				 item.result.@column   数据库字段名(必填)
+				 item.result.@null_value 当值为NULL时填充的默认值(可不填)
+			-->
+			<item id="R_USER" class="TUserEntity">
+				<result property="userId" column="User_ID" />
+				<result property="userName" column="User_Name" null_value="Nothing" />
+				<result property="avatar" column="User_Avatar" null_value="icon.png" />
+			</item>
+			<item id="R_USER_NAME" class="NSString" />
+		</result_map>
+		<statement>
+			<!-- 要执行的SQL语句匹配
+				 @id 自定义唯一ID(必填)
+				 @result_map result_map.item.@id(select必填,其他不用填)
+			-->
+			<select id="user.find_all_list" result_map="R_USER">
+				select * from Tb_User
+			</select>
+			<select id="user.find_user_name" result_map="R_USER_NAME">
+				select User_Name from Tb_User where User_ID = ?
+			</select>
+			<update id="user.modify_user_name">
+				update Tb_User set User_Name = :userName where User_ID = :userId
+			</update>
+			<insert id="user.add_new">
+				insert into Tb_User (User_ID, User_Name, User_Avatar) values (?,?,?)
+			</insert>
+			<delete id="user.remove">
+				delete from Tb_User where User_ID = ?
+			</delete>
+			<replace id="user.save">
+				replace into Tb_user (User_ID, User_Name, User_Avatar) values (:userId,:userName,:avatar)
+			</replace>
+		</statement>
+	</data_mapper>
+</datasource>
